@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="RVILELA">
+	<meta name="author" content="RVILELA">
+
+	<title>Curso Cordova</title>
+
+	<link rel="stylesheet" href="css/tema1.css">
+	<link rel="stylesheet" href="css/jquery.mobile.icons.min.css">
+	<link rel="stylesheet" href="css/jquery.mobile.structure-1.4.5.min.css">
+
+	<script src="js/jquery-1.12.4.min.js"></script>
+	<script src="js/jquery.mobile-1.4.5.min.js"></script>
+	<script src="cordova.js"></script>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
+	<style type="text/css">
+		#content {
+			padding: 0;
+			position : absolute !important;
+			top : 40px !important;
+			right : 0;
+			bottom : 40px !important;
+			left : 0 !important;
+		}
+	</style>
+
+	<script type="text/javascript">
+		var map;
+		var marcador;
+
+		function iniciar() {
+			document.addEventListener('deviceready', dispositivoListo, false);
+		}
+
+		function dispositivoListo() {
+			var latlng1 = new google.maps.LatLng(-12.0459335, -77.0300898);
+			var latlng2 = new google.maps.LatLng(-12.045472, -77.031624);
+			var myOptions = {
+				zoom: 16,
+				center: latlng1,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+			map = new google.maps.Map(document.getElementById('map_canvas'), myOptions);
+			marcador1 = new google.maps.Marker({
+				position: latlng1,
+				map: map,
+				icon: new google.maps.MarkerImage('img/marcador.png'),
+				title: 'Municipio'
+			});
+			marcador2 = new google.maps.Marker({
+				position: latlng2,
+				map: map,
+				icon: new google.maps.MarkerImage('img/marcador.png'),
+				title: 'Comisaria'
+			});
+			info = new google.maps.InfoWindow();
+			(function(marcador1) {
+				google.maps.event.addListener(marcador1, 'click', function(e) {
+					info.setContent('<b>Municipalidad de Ate</b><br/>');
+					info.open(map, marcador1);
+				});
+			})(marcador1);
+			(function(marcador2) {
+				google.maps.event.addListener(marcador2, 'click', function(e) {
+					info.setContent('<b>Comisaria de Ate</b><br/>');
+					info.open(map, marcador2);
+				});
+			})(marcador2);
+		}
+	</script>
+</head>
+
+<body onload="iniciar()">
+
+<div data-role="page">
+	<div data-role="header" data-position="fixed">
+		<h1>Curso Cordova</h1>
+	</div>
+
+	<div data-role="content" id="content">
+		<div id="map_canvas" style="height: 80%;"></div>
+		<a href="index.html" data-role="button" data-icon="back">Regresar</a>
+	</div>
+
+	<div data-role="footer" data-position="fixed">
+		<p align="center">
+			<small>RVILELA &copy; 2016</small>
+		</p>
+	</div>
+</div>
+
+</body>
+
+</html>
